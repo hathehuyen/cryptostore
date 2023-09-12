@@ -1,19 +1,16 @@
-FROM python:3.9-slim-bullseye
+FROM python:3.11.4-slim-bullseye
+ENV CONTAINERIZED yes
 
 RUN apt update
-RUN apt install gcc git -y
+RUN apt install g++ git  -y
 
-RUN pip install --no-cache-dir cython
+WORKDIR /usr/src/app
 RUN pip install --no-cache-dir redis
 RUN pip install --no-cache-dir aioredis
-RUN pip install --no-cache-dir pymongo[srv]
+RUN pip install --no-cache-dir bson
 RUN pip install --no-cache-dir motor
 RUN pip install --no-cache-dir asyncpg
-WORKDIR /app
-RUN git clone -b huyenha --single-branch https://github.com/hathehuyen/cryptofeed.git
-WORKDIR /app/cryptofeed
-RUN python setup.py install
-WORKDIR /app
+RUN pip install --no-cache-dir git+https://github.com/bmoscon/cryptofeed
 
 COPY cryptostore.py ./cryptostore.py
 

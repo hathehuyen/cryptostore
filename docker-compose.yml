@@ -6,6 +6,7 @@ networks:
 
 volumes:
   influxdb-data:
+  # grafana-data:
 
 services:
   bfxstore:
@@ -19,10 +20,10 @@ services:
       HOST: http://influxdb:8086
       ORG: etrading
       BUCKET: cryptobucket
-      TOKEN: aZGy6sVTQwaM02tcrH08yWl1h8pX8NkSJTkO7F7ZebjLO5pZJ_KsUKxFG-KQ3QJ9edfFT30iDz2nUBl8FHFk4g==
-      EXCHANGE: BITFINEX
-      SYMBOLS: BTC-USD,ETH-USD,LEO-USD
-      CHANNELS: trades,ticker 
+      TOKEN: UIN0iIPYjJIusOvU-H65NifsnuvAA62yv3nmBO4mfSXu0PgpYttCge0Pkh3gf_dsnEEfZDEM0wdorwuHg3BAkw==
+      EXCHANGE: BINANCE_FUTURES
+      SYMBOLS: BTC-USDT-PERP
+      CHANNELS: open_interest,funding,ticker 
   influxdb:
     container_name: influxdb
     image: influxdb:2.7-alpine
@@ -40,3 +41,11 @@ services:
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: auth-token-83CrptstPwd66
     volumes:
       - influxdb-data:/var/lib/influxdb2
+  # grafana:
+  #   image: grafana/grafana-enterprise
+  #   networks:
+  #     - crypto-net
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - grafana-data:/var/lib/grafana
